@@ -1,4 +1,4 @@
-import FisherFundamentalTheoremCanonicalLaneLean.Projection
+import canonicalLaneMathlib.AdmissibleClass
 
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
