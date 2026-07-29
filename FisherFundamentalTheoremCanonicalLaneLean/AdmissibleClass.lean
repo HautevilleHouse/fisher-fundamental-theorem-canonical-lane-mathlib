@@ -3,14 +3,14 @@ import canonicalLaneMathlib.AdmissibleClass
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
 
-structure AdmissibleClass where
-  object : FisherAdmittedObject
-  endpointSatisfied : Prop
-  remainderRecorded : Prop
-  gateWitness : endpointSatisfied ∨ remainderRecorded
-
-def admittedClosure (A : AdmissibleClass) : Prop :=
-  FisherWitnessClosed A.object ∧ (A.endpointSatisfied ∨ A.remainderRecorded)
+structure FisherAdmittedObject where
+  population : Type u
+  fitnessFunction : population → ℝ
+  genotypicVariance : ℝ
+  additiveGeneticVariance : ℝ
+  dominanceVariance : ℝ
+  epistaticVariance : ℝ
+  conclusion : additiveGeneticVariance / genotypicVariance ≤ 1
 
 end FisherFundamentalTheoremCanonicalLaneLean
 end HautevilleHouse

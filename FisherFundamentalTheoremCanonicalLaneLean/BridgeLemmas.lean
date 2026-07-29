@@ -1,12 +1,13 @@
-import FisherFundamentalTheoremCanonicalLaneLean.FisherAdmissibleClass
+import FisherFundamentalTheoremCanonicalLaneLean.AdmissibleClass
 
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
 
-def bridgeClosed (A : FisherAdmissibleClass) : Prop :=
-  FisherWitnessClosed A.object
+def bridgeClosed (A : AdmissibleClass) : Prop :=
+  let Obj := A.object
+  Obj.additiveGeneticVariance / Obj.genotypicVariance ≤ 1
 
-theorem bridge_from_admissible_class (A : FisherAdmissibleClass) :
+theorem bridge_from_admissible_class (A : AdmissibleClass) :
     bridgeClosed A := by
   exact A.object.conclusion
 

@@ -3,10 +3,10 @@ import FisherFundamentalTheoremCanonicalLaneLean.BridgeLemmas
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
 
-def gateClosed (A : FisherAdmissibleClass) : Prop :=
+def gateClosed (A : AdmissibleClass) : Prop :=
   A.endpointSatisfied ∨ A.remainderRecorded
 
-theorem gate_from_admissible_class (A : FisherAdmissibleClass) :
+theorem gate_from_admissible_class (A : AdmissibleClass) :
     gateClosed A := by
   exact A.gateWitness
 
