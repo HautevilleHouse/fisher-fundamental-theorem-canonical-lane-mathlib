@@ -1,13 +1,14 @@
+import canonicalLaneMathlib.AdmissibleClass
 import FisherFundamentalTheoremCanonicalLaneLean.GateLemmas
 
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
 
-def ConstrainedTheoremClosure (A : AdmissibleClass) : Prop :=
+def ConstrainedFisherClosure (A : AdmissibleClass) : Prop :=
   bridgeClosed A ∧ gateClosed A
 
-theorem constrained_theorem_closure (A : AdmissibleClass) :
-    ConstrainedTheoremClosure A := by
+theorem constrained_fisher_endgame (A : AdmissibleClass) :
+    ConstrainedFisherClosure A := by
   exact And.intro (bridge_from_admissible_class A) (gate_from_admissible_class A)
 
 end FisherFundamentalTheoremCanonicalLaneLean
