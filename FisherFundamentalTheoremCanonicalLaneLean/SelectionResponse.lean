@@ -1,40 +1,31 @@
-import canonicalLaneMathlib.AdmissibleClass
-import HautevilleHouse.FisherFundamentalTheoremCanonicalLaneLean.FisherFundamentalInequality
+import HautevilleHouse.FisherFundamentalTheoremCanonicalLaneLean.FisherFundamentalEquation
 
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
 
-structure SelectionResponse {M : PopulationGeneticsModel} {H : M.additiveGeneticVariance}
-    {D : AdditiveGeneticVarianceDecomposition H} {F : FisherFundamentalInequality D} where
-  selectionDifferential : Prop
-  responseEquation : Prop
-  breederEquation : Prop
-  realizedHeritability : Prop
-  selectionDifferentialClosed : selectionDifferential
-  responseEquationClosed : responseEquation
-  breederEquationClosed : breederEquation
-  realizedHeritabilityClosed : realizedHeritability
+structure SelectionResponsePackage (G : GenotypeFitnessModel)
+    (Eqn : FisherFundamentalEquation G) where
+  selectionDifferential : ℝ
+  heritability : ℝ
+  responseToSelection : ℝ
+  breedersEquation : responseToSelection = heritability * selectionDifferential
 
-structure SelectionResponseEvidence {M : PopulationGeneticsModel} {H : M.additiveGeneticVariance}
-    {D : AdditiveGeneticVarianceDecomposition H} {F : FisherFundamentalInequality D}
-    (S : SelectionResponse F) where
-  selectionDifferentialClosed : S.selectionDifferential
-  responseEquationClosed : S.responseEquation
-  breederEquationClosed : S.breederEquation
-  realizedHeritabilityClosed : S.realizedHeritability
+structure SelectionResponseEvidence {G : GenotypeFitnessModel}
+    {Eqn : FisherFundamentalEquation G} (S : SelectionResponsePackage G Eqn) where
+  selectionDifferentialPositive : S.selectionDifferential > 0
+  heritabilityBetweenZeroAndOne : 0 ≤ S.heritability ∧ S.heritability ≤ 1
+  breedersEquationClosed : S.breedersEquation
 
-def SelectionResponseClosed {M : PopulationGeneticsModel} {H : M.additiveGeneticVariance}
-    {D : AdditiveGeneticVarianceDecomposition H} {F : FisherFundamentalInequality D}
-    (S : SelectionResponse F) : Prop :=
-  S.selectionDifferential ∧ S.responseEquation ∧ S.breederEquation ∧ S.realizedHeritability
+def SelectionResponseClosed {G : GenotypeFitnessModel}
+    {Eqn : FisherFundamentalEquation G} (S : SelectionResponsePackage G Eqn) : Prop :=
+  S.selectionDifferential > 0 ∧ (0 ≤ S.heritability ∧ S.heritability ≤ 1) ∧ S.breedersEquation
 
-theorem selection_response_closed
-    {M : PopulationGeneticsModel} {H : M.additiveGeneticVariance}
-    {D : AdditiveGeneticVarianceDecomposition H} {F : FisherFundamentalInequality D}
-    (S : SelectionResponse F) (E : SelectionResponseEvidence S) : SelectionResponseClosed S := by
-  exact And.intro E.selectionDifferentialClosed
-    (And.intro E.responseEquationClosed
-      (And.intro E.breederEquationClosed E.realizedHeritabilityClosed))
+theorem selection_response_closed_from_evidence
+    {G : GenotypeFitnessModel} {Eqn : FisherFundamentalEquation G}
+    (S : SelectionResponsePackage G Eqn) (Ev : SelectionResponseEvidence S) :
+    SelectionResponseClosed S := by
+  exact And.intro Ev.selectionDifferentialPositive
+    (And.intro Ev.heritabilityBetweenZeroAndOne Ev.breedersEquationClosed)
 
 end FisherFundamentalTheoremCanonicalLaneLean
 end HautevilleHouse

@@ -1,15 +1,14 @@
-import canonicalLaneMathlib.AdmissibleClass
-import HautevilleHouse.FisherFundamentalTheoremCanonicalLaneLean.BridgeLemmas
-import HautevilleHouse.FisherFundamentalTheoremCanonicalLaneLean.GateLemmas
+import HautevilleHouse.FisherFundamentalTheoremCanonicalLaneLean.SelectionResponse
 
 namespace HautevilleHouse
 namespace FisherFundamentalTheoremCanonicalLaneLean
 
-def FisherFundamentalClosure (A : AdmissibleClass) : Prop :=
+def ConstrainedFisherClosure (A : AdmissibleClass) : Prop :=
   bridgeClosed A ∧ gateClosed A
 
-theorem fisher_fundamental_endgame (A : AdmissibleClass) : FisherFundamentalClosure A :=
-  And.intro (bridge_from_admissible_class A) (gate_from_admissible_class A)
+theorem constrained_fisher_endgame (A : AdmissibleClass) :
+    ConstrainedFisherClosure A := by
+  exact And.intro (bridge_from_admissible_class A) (gate_from_admissible_class A)
 
 end FisherFundamentalTheoremCanonicalLaneLean
 end HautevilleHouse
